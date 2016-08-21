@@ -1,5 +1,25 @@
 #lang plai
 
+;5 - Inversión de números
+
+(define (invierte n)
+ (define (loop num reversa)
+    (cond
+      [(zero? num) reversa]
+      [(let ((ultimo (modulo num 10)))
+         (loop (/ (- num ultimo) 10) (+ (* reversa 10) ultimo)))]))
+   (loop n 0))
+   
+;6 - Eliminar duplicados
+
+(define (elimina-dup l)
+  (cond
+    [(empty? l) '()]
+    [(empty? (cdr l)) (car l)]
+    [(equal? (first l) (second l)) (elimina-dup (cdr l))]
+    [else (cons (car l) (elimina-dup (cdr l)))]))
+
+
 ;7 a
 (define (bin a)
   (cond
