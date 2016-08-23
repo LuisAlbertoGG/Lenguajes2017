@@ -4,6 +4,11 @@
 (define (ec-lin a b)
   display (/(- b )a))
 
+(test (ec-lin 3 2) (-(/ 2 3)))
+(test (ec-lin 5 5) -1)
+(test (ec-lin 4 3) (-(/ 3 4)))
+(test (ec-lin 3 4) (-(/ 4 3)))
+(test (ec-lin 2 5) (-(/ 5 2)))
 ;ejerccio #
 
 (define (area-heron a b c)
@@ -13,6 +18,11 @@
                   (* s (- s a) (- s b )(- s c)))
     )
   )
+(test (area-heron 3 25 26) 36)
+(test (area-heron 5 7 10) 16.24)
+(test (area-heron 10 15 20) 72.61)
+(test (area-heron 5 25 26) 62.16)
+(test (area-heron 12 34 23) 66.8)
 
 ;ejerccio #3
 
