@@ -34,9 +34,16 @@
     
     )
   )
-  
-;ejerccio #4
 
+(test (triangulo-rec? 12 34 23) #f)
+(test (triangulo-rec? 10 34 11) #f)
+(test (triangulo-rec? 17 26 11) #f)
+(test (triangulo-rec? 5 8 11) #f)
+(test (triangulo-rec? 10 24 26) #t)
+;ejerccio #4
+(define (lista-num n)
+  
+  (string->number (string n)) )
 
 ;5 - Inversión de números
 
@@ -47,7 +54,16 @@
       [(let ((ultimo (modulo num 10)))
          (loop (/ (- num ultimo) 10) (+ (* reversa 10) ultimo)))]))
    (loop n 0))
-   
+
+(test (invierte 12345) 54321)
+(test (invierte 543) 345)
+(test (invierte 987) 789)
+(test (invierte 7421) 1247)
+(test (invierte 10101010) 1010101)
+
+
+
+
 ;6 - Eliminar duplicados
 
 (define (elimina-dup l)
