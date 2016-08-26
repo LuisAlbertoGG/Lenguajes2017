@@ -1,4 +1,5 @@
 #lang plai
+
 ;ejerccio #1
 
 (define (ec-lin a b)
@@ -9,7 +10,8 @@
 (test (ec-lin 4 3) (-(/ 3 4)))
 (test (ec-lin 3 4) (-(/ 4 3)))
 (test (ec-lin 2 5) (-(/ 5 2)))
-;ejerccio #
+
+;ejerccio #2
 
 (define (area-heron a b c)
   (let ([s (/(+ a b  c) 2)]
@@ -143,11 +145,12 @@
 
 ;8e - quita
 (define (quita l n)
-  (define (aux1 li i j)
+  (define (aux li i j)
     (cond
-      [(zero? j) i]
-      [else (aux1 (toma li (add1 j)) (append i (list (last li))) (sub1 j))]))
-  (aux1 l empty n))
+      [(empty? li) '()]
+      [(< i j) (aux (cdr li) (add1 i) j)]
+      [else (append (list (first li)) (aux (cdr li) (add1 i) j))]))
+  (aux l 0 n))
 
 ;9 a
 (letrec ([ mayor ( lambda ( n m )
