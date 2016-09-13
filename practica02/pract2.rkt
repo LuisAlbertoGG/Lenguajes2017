@@ -46,39 +46,48 @@
 
 (define (Funcion->string fun)
   (cond
-    [(x? fun) (x)]
-    [(cte? fun) (cte-n fun)] ;Un constructor (cte n) para representar constantes como 2 o 1729, n es un número entero.
-    [(sum? fun) (~a "(" (Funcion->string (sum-f fun)) "+" (Funcion->string (sum-g fun)) ")")];Un constructor (sum f g) que representa una suma de funciones como x + 2, dónde f y g son funciones.
-    [(mul? fun)(~a "(" (Funcion->string (mul-f fun)) "*" (Funcion->string (mul-g fun)) ")")]
-    [(pot? fun) (~a "(" (Funcion->string (pot-b fun)) "^" (Funcion->string (pot-n fun)) ")")]))
+    [(x? fun) "x"]
+    [(cte? fun) (number->string(cte-n fun))] ;Un constructor (cte n) para representar constantes como 2 o 1729, n es un número entero.
+    [(sum? fun) (string-append "(" (Funcion->string (sum-f fun)) "+" (Funcion->string (sum-g fun)) ")")];Un constructor (sum f g) que representa una suma de funciones como x + 2, dónde f y g son funciones.
+    [(mul? fun)(string-append "(" (Funcion->string (mul-f fun)) "*" (Funcion->string (mul-g fun)) ")")]
+    [(pot? fun) (string-append "(" (Funcion->string (pot-b fun)) "^" (Funcion->string (pot-n fun)) ")")]))
 
 (define (evalua fun v)
   (cond
-    [(cte? fun) (cte v)]
-    [(sum? fun) ]
-    [(mul? fun) ]
-    [(pot? fun) ]))
+    [(x? fun) (cte v)]
+    [(cte? fun) (cte (cte-n fun))]
+    [(sum? fun) (append(sum (evalua (sum-f fun) v) (evalua (sum-g fun) v)))]
+    [(mul? fun) (append(mul (evalua (mul-f fun) v) (evalua (mul-g fun) v)))]
+    [(pot? fun) (append(pot (evalua (pot-b fun) v) (evalua (pot-n fun) v)))]))
 
-;(define (deriva fun)
-;  (cond
-;    [(pot? fun) (mul (pot-n fun) (pot (pot-b fun) (- (pot-n fun) 1)))]))
+(define (deriva fun)
+  (cond
+    [(x? fun) (cte 1)]
+    [(cte? fun) (cte 0)]
+    [(sum? fun) (sum (deriva (sum-f fun)) (deriva(sum-g fun)))]
+    [(mul? fun) (mul (pot-n fun) (pot (pot-b fun) (- (pot-n fun) 1)))]))
 
+;(define (derivada f)
+;   (cond
+;    [(cte? f) (cte 0)]
+;    [(fun? f) (cond
+;                   [()])]))
 
 ; car primero
 ; cdr el ultimo
 ;ejecccio #3 Pilas y Colas :
 
-(define-type Nodo
-  [vacio]
-  [nodo (any  elemento )(siguiente Nodo?)])
+;(define-type Nodo
+;  [vacio]
+;  [nodo (any  elemento )(siguiente Nodo?)])
 
-(define elemento
-  [pila (n Nodo?)]
-  [mete-p (e Nodo?)(p Nodo?)]
-  [saca-p (p Nodo?)]
-  [mira-p (p Nodo?)]
+;(define elemento
+;  [pila (n Nodo?)]
+;  [mete-p (e Nodo?)(p Nodo?)]
+;  [saca-p (p Nodo?)]
+;  [mira-p (p Nodo?)]
   
-  )
+ ; )
 ;(define (pila n)
  ; (cond
  ;   [(n? Nodo)]
