@@ -71,19 +71,31 @@
 (define (funToNum f)
   (cond
     [(cte? f) (cte-n f)]))
-;(define (derivada f)
-;   (cond
-;    [(cte? f) (cte 0)]
-;    [(fun? f) (cond
-;                   [()])]))
 
-; car primero
-; cdr el ultimo
-;ejecccio #3 Pilas y Colas :
 
-;(define-type Nodo
-;  [vacio]
-;  [nodo (any  elemento )(siguiente Nodo?)])
+(define (any? x) #t)
+;#3 Pilas y Colas :
+
+(define-type Nodo
+  [vacio]
+  [nodo (elemento any?)(siguiente Nodo?)])
+
+(define-type Pila
+  [pila (l Nodo?)]
+  [mete-p (p pila?) (e any?)]
+  [saca-p (p pila?)]
+  [mira-p (p pila?)])
+
+(define (calc-p pil)
+  (cond
+    [(pila? pil) (pila-l pil)]
+    ;[(mete-p? pila) ()]
+    ;[]
+    [(mira-p? pil) (cond
+                     [(vacio?(nodo-siguiente (pila-l (mira-p-p pil)))) (nodo-elemento (pila-l (mira-p-p pil)))]
+                     [else (calc-p (mira-p (pila (nodo-siguiente (pila-l (mira-p-p pil))))))])]))
+
+
 
 ;(define elemento
 ;  [pila (n Nodo?)]
