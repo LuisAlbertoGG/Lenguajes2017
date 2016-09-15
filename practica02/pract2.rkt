@@ -1,4 +1,5 @@
 #lang plai
+;1er ejercicio
 ; constructor de tipos 
 (define-type Figure
   [triangulo (a number?) (b number?) (c number?)]
@@ -36,7 +37,9 @@
     [(elipse? fig) (* pi (* (elipse-a fig) (elipse-b fig)))]))
 ;Un constructor (x) que representa una variable independiente x. Nótese que no recibe
 ;parámetros.
+;---------------------------------------------------------------------------------------
 
+;Ejercicio 2
 (define-type Funcion
   [x]
   [cte (n number?)]
@@ -71,10 +74,10 @@
 (define (funToNum f)
   (cond
     [(cte? f) (cte-n f)]))
-
+;-------------------------------------------------------------------------------------
+;#Ejercicio3 Pilas y Colas :
 
 (define (any? x) #t)
-;#3 Pilas y Colas :
 
 (define-type Nodo
   [vacio]
@@ -89,39 +92,100 @@
 (define (calc-p pil)
   (cond
     [(pila? pil) (pila-l pil)]
-    ;[(mete-p? pila) ()]
-    ;[]
+    [(mete-p? pil) (pila (mete-pil (mete-p-p pil) (mete-p-e pil)))]
+    [(saca-p? pil) (pila (saca-pil (saca-p-p pil)))]
     [(mira-p? pil) (cond
                      [(vacio?(nodo-siguiente (pila-l (mira-p-p pil)))) (nodo-elemento (pila-l (mira-p-p pil)))]
                      [else (calc-p (mira-p (pila (nodo-siguiente (pila-l (mira-p-p pil))))))])]))
+(define (mete-pil pil e)
+          (cond
+              [(vacio? (nodo-siguiente (pila-l pil))) (nodo (nodo-elemento (pila-l pil)) (nodo e (vacio)))]
+              [else (nodo (nodo-elemento (pila-l pil)) (mete-pil (pila(nodo-siguiente (pila-l pil))) e) )]
+          ))
+
+(define (saca-pil pil)
+          (cond
+              [(vacio? (nodo-siguiente (pila-l pil))) (vacio)]
+              [else (nodo (nodo-elemento (pila-l pil)) (saca-pil (pila(nodo-siguiente (pila-l pil)))) )]
+          ))
+
+(define-type Cola
+  [cola (l Nodo?)]
+  [mete-c (c cola?) (e any?)]
+  [saca-c (c cola?)]
+  [mira-c (c cola?)])
+
+(define (calc-c cc)
+  (cond
+    [(cola? cc) (cola-l cc)]
+    [(mete-c? cc) (cola (mete-col (mete-c-c cc) (mete-c-e cc)))]
+    [(saca-c? cc) (cola (saca-col (saca-c-c cc)))]
+    [(mira-c? cc) (cond
+                     [(vacio?(nodo-elemento (cola-l (mira-c-c cc)))) (vacio)]
+                     [else (nodo-elemento (cola-l (mira-c-c cc)))])]))
+
+(define (mete-col cc e)
+          (nodo e (cola-l cc)))
+
+(define (saca-col cc)
+  (cond
+    [(vacio? (cola-l cc)) (display "la pila ya es vacia")]
+    [else (nodo-siguiente (cola-l cc))]))
+
+(define (no-duplicados l)
+
+  (if (l list?)
+      (cond
+    [(not (check-duplicates l)) #t]
+    [else (remove-duplicates l)]
+    ) 
+      #f)
+  )
+;-------------------------------------------------------------------------------------
+;Ejercicio 4
+(define-type Conjunto 
+  [conjunto (l list? ) ]
+  [esvacio (l conjunto?)]
+  [contiene (c conjunto?) (e number?)]
+  [agrega (c1 conjunto?) (e number?)]
+  [union (c1 conjunto?) (c2 conjunto?)]
+  [interseccion (c1 conjunto?) (c2 conjunto?)]
+  [diferencia (c1 conjunto?) (c2 conjunto?)]
+  )
 
 
-
-;(define elemento
-;  [pila (n Nodo?)]
-;  [mete-p (e Nodo?)(p Nodo?)]
-;  [saca-p (p Nodo?)]
-;  [mira-p (p Nodo?)]
+(define (calc-cjto c )
+  (cond
+  [(conjunto? c) ( remove-duplicates (conjunto-l c) )]
+  [(esvacio? c) (empty? (conjunto-l(esvacio-l c)))]
+  [(contiene? c) (contiene-elemento (conjunto-l (contiene-c c)) (contiene-e c))]
+  [(agrega? c) (conjunto (remove-duplicates(append (conjunto-l (agrega-c1 c)) (cons  (agrega-e c) '()))))]
+  [(union? c) (remove-duplicates (append (conjunto-l(union-c1 c)) (conjunto-l(union-c2 c))))]
+  [(interseccion? c) (conjunto(saca (remove-duplicates(conjunto-l (interseccion-c1 c))) (remove-duplicates(conjunto-l (interseccion-c2 c)))))]
+  [(diferencia? c) (remove* (conjunto-l(diferencia-c2 c)) (conjunto-l(diferencia-c1 c)))]
   
- ; )
-;(define (pila n)
- ; (cond
- ;   [(n? Nodo)]
- ;   [(me? )]
-;    
-   ; )
-  ;)
+  )
+)
 
- 
-;constructor pila n :
+(define (contiene-elemento l e)
+  (cond
+    [(not(member e l)) #f]
+    [(list? (member e l)) #t]))
 
 
-;mete-p e p :
+(define (recorre1 e l2)
+    
+  (cond
+    [(empty? l2) '()]
+    [(equal? (car l2) e) (cons e '())]
+    [else (recorre1 e (cdr l2))]))
 
-;(saca-p p) : elimina un elemento en la pila , elimina al final 
-
-;contructor de (mira-p) p :
-
+(define (saca l1 l2)
+  (cond
+    [(empty? l1) '()]
+    [(empty? l2) '()]
+    [else (append (recorre1 (car l1) l2) (saca (cdr l1) l2)) 
+          ]))
 
 
 
