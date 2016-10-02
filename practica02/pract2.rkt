@@ -189,6 +189,104 @@
 
 
 
+;;
+
+;-----------------------------------------------------------------
+;--------------------Pruebas ejerccio #1--------------------------
+;---1.0
+(define a1 (triangulo 20 25 30 ))
+a1
+(test (area a1 )248.03 )
+(test (perimetro a1 )75)
+;--1.1
+(define a2 (cuadrado  75 ))
+a2
+(test(area a2) 5625) 
+(test (perimetro a2) 300)
+;-----------------------------------------------------------------
+;--------------------Pruebas ejerccio #2--------------------------
+;-----------------------Funcion->string---------------------------
+;---1.0
+(define f1(mul (cte 7) (sum (cte 4)(x))))
+f1
+(test (Funcion->string f1)"(7*(4+x))")
+;----1.1
+(define f2(sum (x)( cte 3)))
+f2
+(test (Funcion->string f2)"(x+3)")
+;-----------------------------------------------------------------
+;-------------------------evalua----------------------------------
+;---1.0
+(test (evalua f1 3) (mul (cte 7) (sum (cte 4) (cte 3))))
+
+
+;---1.1
+(test (evalua f2 10)(evalua f2 10))
+;-----------------------------------------------------------------
+;-----------------------deriva------------------------------------
+;---1.0
+(test (deriva f1)(sum (mul (cte 0) (sum (cte 4) (x))) (mul (sum (cte 0) (cte 1)) (cte 7))))
+;---1.1
+(test (deriva f2)(sum (cte 1) (cte 0)))
+;-----------------------------------------------------------------
+;--------------------Pruebas ejerccio #3--------------------------
+;----------------------define pila---------------------------
+;----1.0
+(define p0 (pila (nodo 9 (nodo 8 (nodo 7 (nodo 6 (vacio)))))))
+(test (calc-p p0)(nodo 9 (nodo 8 (nodo 7 (nodo 6 (vacio))))))
+;----1.1
+(test (calc-p (mete-p p0 1))(pila (nodo 9 (nodo 8 (nodo 7 (nodo 6 (nodo 1 (vacio))))))))
+;----1.3
+(test (calc-p (saca-p p0))(pila (nodo 9 (nodo 8 (nodo 7 (vacio))))))
+;----1.4
+(test (calc-p (mira-p p0))6)
+;----------------------prueba------------------------------------
+;----2.0
+(define p1   (pila (nodo 2 (nodo 4 (vacio)))))
+;----2.1
+(test (calc-p p1)(nodo 2 (nodo 4 (vacio))))
+;----2.2
+(test  (calc-p (mete-p p1 10))(pila (nodo 2 (nodo 4 (nodo 10 (vacio))))))
+(test (calc-p (saca-p p1))(pila (nodo 2 (vacio))))
+;----2.4
+(test (calc-p (mira-p p1))4)
+;-----------------------------------------------------------------
+;--------------------Pruebas ejerccio #4--------------------------
+;-------------------------Conjuntos -----------------------------
+
+(define a (conjunto '( 1 2 3 4 5)))
+(define b(conjunto '(  2  4 6 8)))
+(define c(conjunto '(1 3 5 7)))
+
+;----1.0
+(test (calc-cjto a)'(1 2 3 4 5) )
+;----1.1
+(test (calc-cjto (esvacio? a))void )
+;----1.2
+(test(calc-cjto (contiene? a 1))#t)
+;----1.3
+(test (calc-cjto (agrega a 9))(conjunto '(1 2 3 4 5 9)))
+;----1.4
+(test(calc-cjto (union a c))'(1 2 3 4 5 7))
+;----1.5
+(test (calc-cjto (interseccion a c))(conjunto '(1 3 5)))
+;-------------------------Conjuntos 2.0  -----------------------------
+(test (calc-cjto (union a c))'(1 2 3 4 5 7))
+;----2.0
+(test (calc-cjto b)'(  2  4 6 8))
+;----2.1
+(test (calc-cjto (esvacio? b))void)
+;----2.2
+(test (calc-cjto (contiene? b 2))#t)
+;----2.3
+(test(calc-cjto (agrega b 9))(conjunto '(2 4 6 8 9)) )
+;----2.4
+(test (calc-cjto (union a b))'(1 2 3 4 5 6 8))
+;----2.5
+(test (calc-cjto (interseccion a b))(conjunto '(2 4)) )
+
+
+
 
 
 
