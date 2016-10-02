@@ -145,8 +145,8 @@
 ;Ejercicio 4
 (define-type Conjunto 
   [conjunto (l list? ) ]
-  [esvacio (l conjunto?)]
-  [contiene (c conjunto?) (e number?)]
+  [esvacio? (l conjunto?)]
+  [contiene? (c conjunto?) (e number?)]
   [agrega (c1 conjunto?) (e number?)]
   [union (c1 conjunto?) (c2 conjunto?)]
   [interseccion (c1 conjunto?) (c2 conjunto?)]
@@ -157,8 +157,8 @@
 (define (calc-cjto c )
   (cond
   [(conjunto? c) ( remove-duplicates (conjunto-l c) )]
-  [(esvacio? c) (empty? (conjunto-l(esvacio-l c)))]
-  [(contiene? c) (contiene-elemento (conjunto-l (contiene-c c)) (contiene-e c))]
+  [(esvacio?? c) (empty? (conjunto-l(esvacio?-l c)))]
+  [(contiene?? c) (contiene-elemento (conjunto-l (contiene?-c c)) (contiene?-e c))]
   [(agrega? c) (conjunto (remove-duplicates(append (conjunto-l (agrega-c1 c)) (cons  (agrega-e c) '()))))]
   [(union? c) (remove-duplicates (append (conjunto-l(union-c1 c)) (conjunto-l(union-c2 c))))]
   [(interseccion? c) (conjunto(saca (remove-duplicates(conjunto-l (interseccion-c1 c))) (remove-duplicates(conjunto-l (interseccion-c2 c)))))]
